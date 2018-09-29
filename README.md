@@ -17,10 +17,10 @@ Druid是阿里巴巴开源平台上一个开源的数据库连接池实现，它
             <artifactId>spring-boot-starter-web</artifactId>
             <version>1.5.2.RELEASE</version>
         </dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jdbc</artifactId>
-		</dependency>
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-jdbc</artifactId>
+	</dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
@@ -31,22 +31,22 @@ Druid是阿里巴巴开源平台上一个开源的数据库连接池实现，它
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.41</version>
         </dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-test</artifactId>
+	    <scope>test</scope>
+	</dependency>
+    </dependencies>
 ```
-parent依赖为spring-boot-starter-parent，
-其中spring-boot-starter-web表示为一个web项目；  
-spring-boot-starter-jdbc表示使用jdbc访问数据库；
-druid-spring-boot-starter为Druid与SpringBoot集成的依赖；
-mysql-connector-java是MySQL的java版驱动包；
-spring-boot-starter-test是SpringBoot支持的test包。
+parent依赖为spring-boot-starter-parent，  
+其中spring-boot-starter-web表示为一个web项目；    
+spring-boot-starter-jdbc表示使用jdbc访问数据库；  
+druid-spring-boot-starter为Druid与SpringBoot集成的依赖；  
+mysql-connector-java是MySQL的java版驱动包；  
+spring-boot-starter-test是SpringBoot支持的test包。  
 
 3、DataSource配置及监控配置
-  新建一个java类，内容如下：
+新建一个java类，内容如下：
 ```java
 package com.gabriel.druid.config;
 
@@ -147,25 +147,26 @@ spring.datasource.druid.connectionProperties=druid.stat.mergeSql=true;druid.stat
 ```
 
 5、程序启动
-启动MySQL服务；
-启动SpringBoot程序；
-浏览器访问：http://localhost:8080/druid/即可看到Druid的监控页面了
-![image.png](https://upload-images.jianshu.io/upload_images/6880015-e1b4f9058c307ae8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+启动MySQL服务；  
+启动SpringBoot程序；  
+浏览器访问：http://localhost:8080/druid/ 即可看到Druid的监控页面了  
+![image.png](https://upload-images.jianshu.io/upload_images/6880015-e1b4f9058c307ae8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)  
 登录账号和密码为第3步代码配置的loginUsername和loginPassword
 
 ### 三、遇到的问题
-1、提示错误，参数类型不符
-![image.png](https://upload-images.jianshu.io/upload_images/6880015-b30807b3acfd7c32.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+1、提示错误，参数类型不符  
+![image.png](https://upload-images.jianshu.io/upload_images/6880015-b30807b3acfd7c32.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)  
 
-![image.png](https://upload-images.jianshu.io/upload_images/6880015-5accac04faf49df8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![image.png](https://upload-images.jianshu.io/upload_images/6880015-5accac04faf49df8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)  
 原因：pom.xml中未添加spring-boot-starter-web依赖
-查看StatViewServlet继承关系图，如下：
-![image.png](https://upload-images.jianshu.io/upload_images/6880015-7f0e49b3ccc44167.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-缺少web依赖，就会缺少tomcat-embed，缺少HttpServlet，所以报类型不匹配。
-2、空指针异常
-![image.png](https://upload-images.jianshu.io/upload_images/6880015-84a23633c30760c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-如图1~4行，3和4为创建DruidDataSource对象，任选其一均可；1和2行不是必须的，可以不要；
-2的存在与否不影响数据库配置，但是1和3不能共存，否则报空指针异常
+查看StatViewServlet继承关系图，如下：    
+![image.png](https://upload-images.jianshu.io/upload_images/6880015-7f0e49b3ccc44167.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)    
+缺少web依赖，就会缺少tomcat-embed，缺少HttpServlet，所以报类型不匹配。  
+
+2、空指针异常    
+![image.png](https://upload-images.jianshu.io/upload_images/6880015-84a23633c30760c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)    
+如图1~4行，3和4为创建DruidDataSource对象，任选其一均可；1和2行不是必须的，可以不要；  
+2的存在与否不影响数据库配置，但是1和3不能共存，否则报空指针异常  
 ```java
 Caused by: java.lang.NullPointerException: null
 	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:311) ~[na:1.8.0_131]
