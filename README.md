@@ -146,7 +146,7 @@ spring.datasource.druid.connectionProperties=druid.stat.mergeSql=true;druid.stat
 #spring.datasource.druid.useGlobalDataSourceStat=true
 ```
 
-5、程序启动
+5、程序启动  
 启动MySQL服务；  
 启动SpringBoot程序；  
 浏览器访问：http://localhost:8080/druid/ 即可看到Druid的监控页面了  
